@@ -3,6 +3,7 @@
 namespace App;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
 
@@ -33,7 +34,7 @@ class Manager
         $this->entityManager = EntityManager::create($dbParams, $config);
     }
 
-    public static function get()
+    public static function get(): EntityManagerInterface
     {
         if (self::$manger === null) {
             try {
