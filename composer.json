@@ -26,12 +26,12 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "AppTest\\": "tests/"
+      "Test\\AppTest\\": "tests/"
     }
   },
   "scripts": {
     "phpcs": "phpcs -p --standard=PSR2 src tests",
     "phpcsf": "phpcbf -p --standard=PSR2 src tests",
-    "phpunit": "phpunit --configuration src.xml"
+    "phpunit": "phpunit --configuration phpunit.xml"
   }
 }

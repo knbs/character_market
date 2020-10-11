@@ -13,6 +13,8 @@ SimpleRouter::group(
             return 'Hello world!!! =D';
         });
 
+        SimpleRouter::post('/api/update_market', 'UpdateMarketController@updateMarket');
+
         SimpleRouter::get('/api/test', function () {
             $sql = "show databases;";
             $entityManager = Manager::get();
