@@ -18,3 +18,5 @@
  8.- run `npm run build`
  
  9.- Access to http://localhost:8080
+ 
+ To run the test use `composer run-script phpunit` inside the html directory of the container
