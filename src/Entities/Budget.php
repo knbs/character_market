@@ -7,11 +7,12 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToOne;
+use JsonSerializable;
 
 /**
  * @Entity
  */
-class Budget
+class Budget implements JsonSerializable
 {
     const TOTAL_DEFAULT = '1000';
 
@@ -75,5 +76,14 @@ class Budget
     public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'total' => $this->total,
+            'spent' => $this->spent
+        ];
     }
 }

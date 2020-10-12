@@ -13,12 +13,13 @@ use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\PersistentCollection;
+use JsonSerializable;
 
 /**
  * @Entity(repositoryClass="App\Repositories\CharacterRepository")
  * @Table(name="GameCharacter")
  */
-class Character
+class Character implements JsonSerializable
 {
     /**
      * @Id
@@ -131,5 +132,16 @@ class Character
     public function setMarketItem(MarketItem $marketItem): void
     {
         $this->marketItem = $marketItem;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'photo' => $this->photoUrl,
+            'metadata' => $this->metadata,
+            'marketData' => $this->marketData
+        ];
     }
 }

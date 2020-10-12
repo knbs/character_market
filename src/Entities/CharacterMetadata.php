@@ -7,11 +7,12 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToOne;
+use JsonSerializable;
 
 /**
  * @Entity
  */
-class CharacterMetadata
+class CharacterMetadata implements JsonSerializable
 {
     /**
      * @Id
@@ -91,5 +92,15 @@ class CharacterMetadata
     public function setCharacter(Character $character): void
     {
         $this->character = $character;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'strength' => $this->strength,
+            'agility' => $this->agility,
+            'luck' => $this->luck
+        ];
     }
 }

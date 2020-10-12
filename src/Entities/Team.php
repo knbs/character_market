@@ -79,6 +79,7 @@ class Team implements JsonSerializable
     {
         if (!$this->characters->contains($character)) {
             $this->characters->add($character);
+            $character->getTeams()->add($this);
         }
     }
 

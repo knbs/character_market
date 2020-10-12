@@ -19,4 +19,12 @@ class TeamController
 
         return json_encode($team);
     }
+
+    public function show(int $id)
+    {
+        $entityManger = Manager::get();
+        $team = $entityManger->getRepository(Team::class)->find($id);
+
+        return json_encode($team);
+    }
 }

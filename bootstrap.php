@@ -7,28 +7,29 @@ use Pecee\SimpleRouter\SimpleRouter;
 require_once 'vendor/autoload.php';
 
 SimpleRouter::group(
-    ['namespace' => '\App\Controllers', 'exceptionHandler' => CustomExceptionHandler::class],
+    ['namespace' => '\App\Controllers'],
     function () {
         SimpleRouter::get('/api/', function () {
             return 'Hello world!!! =D';
         });
 
-        SimpleRouter::post('/api/update_market', 'UpdateMarketController@updateMarket');
+        SimpleRouter::get('/api/update_market', 'MarketController@updateMarket');
 
-        SimpleRouter::get('/api/test', function () {
-            $sql = "show databases;";
-            $entityManager = Manager::get();
-            try {
-                $stmt = $entityManager->getConnection()->prepare($sql);
-                $stmt->execute();
-                $all = $stmt->fetchAllAssociative();
-                var_dump($all);
-            } catch (\Doctrine\DBAL\Exception $exception) {
-                echo $exception->getMessage();
-            } catch (\Doctrine\DBAL\Driver\Exception $exception) {
-                echo $exception->getMessage();
-            }
-        });
+        SimpleRouter::post('/api/team/{userId}/{name}', 'TeamController@createTeam');
+
+        SimpleRouter::post('/api/buy/{teamId}/{characterId}', 'MarketController@buyCharacter');
+
+        SimpleRouter::get('/api/users', 'UserController@list');
+
+        SimpleRouter::get('/api/team/{id}', 'TeamController@show');
+
+        SimpleRouter::get('/api/characters', 'CharacterController@list');
+
+        SimpleRouter::post('/api/character/{id}/min_price/{price}', 'CharacterController@setMinPrice');
+
+        SimpleRouter::post('/api/character/{id}/max_price/{price}', 'CharacterController@setMaxPrice');
+
+        SimpleRouter::post('/api/character/{id}/available/{state}', 'CharacterController@setAvailable');
     }
 );
 
