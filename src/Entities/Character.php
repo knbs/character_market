@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -55,11 +56,11 @@ class Character
      * @ManyToMany(targetEntity="Team", inversedBy="characters")
      * @JoinTable(name="TeamCharacters")
      */
-    private PersistentCollection $teams;
+    private Collection $teams;
 
     public function __construct()
     {
-        $this->teams = new PersistentCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): int
@@ -112,12 +113,12 @@ class Character
         $this->marketData = $marketData;
     }
 
-    public function getTeams(): PersistentCollection
+    public function getTeams(): Collection
     {
         return $this->teams;
     }
 
-    public function setTeams(PersistentCollection $teams): void
+    public function setTeams(Collection $teams): void
     {
         $this->teams = $teams;
     }

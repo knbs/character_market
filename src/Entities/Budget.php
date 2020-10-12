@@ -28,6 +28,11 @@ class Budget
     private string $total = self::TOTAL_DEFAULT;
 
     /**
+     * @Column(length=15)
+     */
+    private string $spent = '0';
+
+    /**
      * @OneToOne(targetEntity="User", inversedBy="budget")
      */
     private User $user;
@@ -47,9 +52,19 @@ class Budget
         return $this->total;
     }
 
-    public function setTotal(float $total): void
+    public function setTotal(string $total): void
     {
         $this->total = $total;
+    }
+
+    public function getSpent(): string
+    {
+        return $this->spent;
+    }
+
+    public function setSpent(string $spent): void
+    {
+        $this->spent = $spent;
     }
 
     public function getUser(): User

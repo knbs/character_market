@@ -2,13 +2,13 @@
 
 namespace App\Entities;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @Entity
@@ -35,11 +35,11 @@ class User
     /**
      * @OneToMany(targetEntity="Team", mappedBy="user")
      */
-    private ArrayCollection $teams;
+    private PersistentCollection $teams;
 
     public function __construct()
     {
-        $this->teams = new ArrayCollection();
+        $this->teams = new PersistentCollection();
     }
 
     public function getId(): int
