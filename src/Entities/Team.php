@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -36,11 +37,11 @@ class Team
     /**
      * @ManyToMany(targetEntity="Character", mappedBy="teams")
      */
-    private PersistentCollection $characters;
+    private Collection $characters;
 
     public function __construct()
     {
-        $this->characters = new PersistentCollection();
+        $this->characters = new ArrayCollection();
     }
 
     public function getId(): int
@@ -63,14 +64,21 @@ class Team
         $this->name = $name;
     }
 
-    public function getCharacters(): PersistentCollection
+    public function getCharacters(): Collection
     {
         return $this->characters;
     }
 
-    public function setCharacters(PersistentCollection $characters): void
+    public function setCharacters(Collection $characters): void
     {
         $this->characters = $characters;
+    }
+
+    public function addCharacter(Character $character)
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters->add($character);
+        }
     }
 
     public function getUser(): User
