@@ -16,11 +16,14 @@ class CustomExceptionHandler implements IExceptionHandler
     */
     public function handleError(Request $request, Exception $error): void
     {
+
         if ($request->getUrl()->contains('/api')) {
+
             response()->json([
                 'error' => $error->getMessage(),
                 'code'  => $error->getCode(),
             ]);
+            var_dump('sadfasdfasdfasdfasd');
         }
 
         if ($error instanceof NotFoundHttpException) {

@@ -17,7 +17,7 @@ class MarketController
     /**
      * @return MarketItem[]
      */
-    public function updateMarket(): array
+    public function updateMarket(): string
     {
         $entityManager = Manager::get();
         /** @var MarketItem[] $marketItems */
@@ -34,7 +34,7 @@ class MarketController
 
         $entityManager->flush();
 
-        return $marketItems;
+        return json_encode($marketItems);
     }
 
     public function buyCharacter(int $teamId, int $characterId)
@@ -60,6 +60,6 @@ class MarketController
         $team->addCharacter($character);
         $budget->setSpent($spent + $characterPrice);
         $entityManager->flush();
-        return ['status' => 'ok', 'message' => self::MESSAGE_BUY_SUCCESS];
+        return json_encode(['status' => 'ok', 'message' => self::MESSAGE_BUY_SUCCESS]);
     }
 }

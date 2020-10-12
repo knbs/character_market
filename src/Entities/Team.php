@@ -11,11 +11,12 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\PersistentCollection;
+use JsonSerializable;
 
 /**
  * @Entity
  */
-class Team
+class Team implements JsonSerializable
 {
     /**
      * @Id
@@ -89,5 +90,15 @@ class Team
     public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'userId' => $this->user->getId(),
+            'characters' => $this->characters->toArray()
+        ];
     }
 }

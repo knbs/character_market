@@ -8,7 +8,7 @@ use App\Manager;
 
 class TeamController
 {
-    public function createTeam(int $userId, string $name): Team
+    public function createTeam(int $userId, string $name): string
     {
         $entityManger = Manager::get();
         $team = new Team();
@@ -17,6 +17,6 @@ class TeamController
         $entityManger->persist($team);
         $entityManger->flush();
 
-        return $team;
+        return json_encode($team);
     }
 }

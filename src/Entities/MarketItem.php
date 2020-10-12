@@ -7,11 +7,12 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToOne;
+use JsonSerializable;
 
 /**
  * @Entity(repositoryClass="App\Repositories\MarketItemRepository")
  */
-class MarketItem
+class MarketItem implements JsonSerializable
 {
     /**
      * @Id
@@ -58,5 +59,14 @@ class MarketItem
     public function setCharacter(Character $character): void
     {
         $this->character = $character;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'price' => $this->price,
+            'characterId' => $this->character->getId()
+        ];
     }
 }

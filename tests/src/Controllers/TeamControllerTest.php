@@ -30,7 +30,8 @@ class TeamControllerTest extends TestCase
         /** @var User $user */
         $user = $entityManager->getRepository(User::class)->findOneBy([]);
         $controller = new TeamController();
-        $team = $controller->createTeam($user->getId(), 'foo');
+        $response = json_decode($controller->createTeam($user->getId(), 'foo'), true);
+        $team = $entityManager->getRepository(Team::class)->find($response['id']);
         $this->assertSame($team->getUser(), $user);
     }
 }

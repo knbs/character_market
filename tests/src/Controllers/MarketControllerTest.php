@@ -16,10 +16,11 @@ final class MarketControllerTest extends TestCase
     public function returnOnlyAvailableItems()
     {
         $controller = new MarketController();
-        $marketItems = $controller->updateMarket();
+        $marketItems = json_decode($controller->updateMarket(), true);
         $this->assertIsArray($marketItems);
-        $this->assertInstanceOf(MarketItem::class, $marketItems[0]);
-        $this->assertTrue($marketItems[0]->getCharacter()->getMarketData()->isAvailable());
+        $entityManager = Manager::get();
+        $marketItem = $entityManager->getRepository(MarketItem::class)->find($marketItems[0]['id']);
+        $this->assertTrue($marketItem->getCharacter()->getMarketData()->isAvailable());
     }
 
     /** @test */
@@ -54,14 +55,17 @@ final class MarketControllerTest extends TestCase
         $entities = $this->prepareBuyData($budget, $spent, $price);
 
         $controller = new MarketController();
-        $jsonArray = $controller->buyCharacter($entities['team']->getId(), $entities['character']->getId());
+        $jsonArray = json_decode(
+            $controller->buyCharacter($entities['team']->getId(), $entities['character']->getId()),
+            true
+        );
         self::assertSame('ok', $jsonArray['status']);
 
         $entityManager = Manager::get();
         /** @var Team $team */
         $team = $entityManager->getRepository(Team::class)->find($entities['team']->getId());
         $character = $entityManager->getRepository(Character::class)->find($entities['character']->getId());
-        self::assertTrue(in_array($character, (array)$team->getCharacters()));
+        self::assertTrue($team->getCharacters()->contains($character));
     }
 
     /** @test */
@@ -73,7 +77,10 @@ final class MarketControllerTest extends TestCase
         $entities = $this->prepareBuyData($budget, $spent, $price);
 
         $controller = new MarketController();
-        $jsonArray = $controller->buyCharacter($entities['team']->getId(), $entities['character']->getId());
+        $jsonArray = json_decode(
+            $controller->buyCharacter($entities['team']->getId(), $entities['character']->getId()),
+            true
+        );
         self::assertSame('ok', $jsonArray['status']);
 
         $entityManager = Manager::get();
