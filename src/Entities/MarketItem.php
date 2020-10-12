@@ -66,7 +66,9 @@ class MarketItem implements JsonSerializable
         return [
             'id' => $this->id,
             'price' => $this->price,
-            'characterId' => $this->character->getId()
+            'characterId' => $this->character->getId(),
+            'name' => $this->character->getName(),
+            'photo' => $this->character->getPhotoUrl()
         ];
     }
 }

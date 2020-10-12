@@ -13,7 +13,7 @@ SimpleRouter::group(
             return 'Hello world!!! =D';
         });
 
-        SimpleRouter::get('/api/update_market', 'MarketController@updateMarket');
+        SimpleRouter::post('/api/update_market', 'MarketController@updateMarket');
 
         SimpleRouter::post('/api/team/{userId}/{name}', 'TeamController@createTeam');
 

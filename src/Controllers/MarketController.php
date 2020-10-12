@@ -50,11 +50,11 @@ class MarketController
         $limit = (float)$budget->getTotal() * self::LIMIT_DEBT;
         $characterPrice = (float)$character->getMarketItem()->getPrice();
         if (($characterPrice + $spent) > $limit) {
-            return ['status' => 'error', 'message' => self::MESSAGE_BUDGET_HAS_BEED_EXCEEDED];
+            return json_encode(['status' => 'error', 'message' => self::MESSAGE_BUDGET_HAS_BEED_EXCEEDED]);
         }
 
         if ($team->getCharacters()->contains($character)) {
-            return ['status' => 'error', 'message' => self::MESSAGE_ALREADY_BOUGHT];
+            return json_encode(['status' => 'error', 'message' => self::MESSAGE_ALREADY_BOUGHT]);
         }
 
         $team->addCharacter($character);

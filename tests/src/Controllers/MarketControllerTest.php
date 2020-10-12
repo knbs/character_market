@@ -99,7 +99,11 @@ final class MarketControllerTest extends TestCase
         $entities = $this->prepareBuyData($budget, $spent, $price);
 
         $controller = new MarketController();
-        $jsonArray = $controller->buyCharacter($entities['team']->getId(), $entities['character']->getId());
+        $jsonArray = json_decode(
+            $controller->buyCharacter($entities['team']->getId(), $entities['character']->getId()),
+            true
+        );
+        ;
         self::assertSame('error', $jsonArray['status']);
         self::assertSame(MarketController::MESSAGE_BUDGET_HAS_BEED_EXCEEDED, $jsonArray['message']);
     }
@@ -117,7 +121,10 @@ final class MarketControllerTest extends TestCase
         Manager::get()->flush();
 
         $controller = new MarketController();
-        $jsonArray = $controller->buyCharacter($entities['team']->getId(), $entities['character']->getId());
+        $jsonArray = json_decode(
+            $controller->buyCharacter($entities['team']->getId(), $entities['character']->getId()),
+            true
+        );
         self::assertSame('error', $jsonArray['status']);
         self::assertSame(MarketController::MESSAGE_ALREADY_BOUGHT, $jsonArray['message']);
     }
